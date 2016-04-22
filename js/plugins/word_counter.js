@@ -8,13 +8,13 @@
         charCounterMax: -1,
         charCounterCount: !0
     }), a.FE.PLUGINS.charCounter = function (b) {
-        function c() {
+        function getCharCount() {
             return b.$el.text().length
         }
 
         function d(a) {
             if (b.opts.charCounterMax < 0) return !0;
-            if (c() < b.opts.charCounterMax) return !0;
+            if (getCharCount() < b.opts.charCounterMax) return !0;
             var d = a.which;
             return !b.keys.ctrlKey(a) && b.keys.isCharacter(d) ? (a.preventDefault(), a.stopPropagation(), b.events.trigger("charCounter.exceeded"), !1) : !0
         }
@@ -22,12 +22,12 @@
         function e(d) {
             if (b.opts.charCounterMax < 0) return d;
             var e = a("<div>").html(d).text().length;
-            return e + c() <= b.opts.charCounterMax ? d : (b.events.trigger("charCounter.exceeded"), "")
+            return e + getCharCount() <= b.opts.charCounterMax ? d : (b.events.trigger("charCounter.exceeded"), "")
         }
 
         function f() {
             if (b.opts.charCounterCount) {
-                var a = c() + (b.opts.charCounterMax > 0 ? "/" + b.opts.charCounterMax : "");
+                var a = getCharCount() + (b.opts.charCounterMax > 0 ? "/" + b.opts.charCounterMax : "");
                 h.text(a), b.opts.toolbarBottom && h.css("margin-bottom", b.$tb.outerHeight(!0));
                 var d = b.$wp.get(0).offsetWidth - b.$wp.get(0).clientWidth;
                 d >= 0 && ("rtl" == b.opts.direction ? h.css("margin-left", d) : h.css("margin-right", d))
@@ -44,7 +44,7 @@
         var h;
         return {
             _init: g,
-            count: c
+            count: getCharCount
         }
     }
 });
