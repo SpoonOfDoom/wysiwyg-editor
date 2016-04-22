@@ -8,8 +8,24 @@
         charCounterMax: -1,
         charCounterCount: !0
     }), a.FE.PLUGINS.charCounter = function (b) {
+        function get_text(el) {
+            var ret = "";
+            var length = el.childNodes.length;
+            for (var i = 0; i < length; i++) {
+                var node = el.childNodes[i];
+                if (node.nodeType != 8) {
+                    ret += node.nodeType != 1 ? node.nodeValue : " " + get_text(node);
+                }
+            }
+            return ret;
+        }
+
         function getCharCount() {
-            return b.$el.text().length
+            //use custom getText function; jQuery text() leaves no space between words in constructs such as "<h1>Title</h1><p>This is the text.</p>", resulting in TitleThis is the text.
+            var text = get_text(b.$el[0]); 
+            var myRe = /\w\b/gim;
+            var myArray = text.match(myRe);
+            return myArray.length;
         }
 
         function d(a) {
